@@ -1861,12 +1861,12 @@
 		(descr "Diode, DO-35_SOD27 series, Axial, Vertical, pin pitch=2.54mm, , length*diameter=4*2mm^2, , http://www.diodes.com/_files/packages/DO-35.pdf")
 		(tags "Diode DO-35_SOD27 series Axial Vertical pin pitch 2.54mm  length 4mm diameter 2mm")
 		(property "Reference" "VD1"
-			(at 1.27 -2.326371 180)
+			(at 2 1.5 180)
 			(layer "F.SilkS")
 			(uuid "6d472443-54aa-4cb7-a4ea-aa711b15e2a6")
 			(effects
 				(font
-					(size 1 1)
+					(size 0.8 0.8)
 					(thickness 0.15)
 				)
 			)
@@ -1995,12 +1995,12 @@
 			(uuid "9bb3e238-def1-4531-9010-752439c2d756")
 		)
 		(fp_text user "A"
-			(at 1 1.75 180)
+			(at -1 1.75 180)
 			(layer "F.SilkS")
 			(uuid "499bd84a-34d4-4acc-b0d9-72b2f0a48031")
 			(effects
 				(font
-					(size 1 1)
+					(size 0.8 0.8)
 					(thickness 0.15)
 				)
 			)
@@ -5714,7 +5714,7 @@
 		(descr "C, Disc series, Radial, pin pitch=2.50mm, , diameter*width=3.0*1.6mm^2, Capacitor, http://www.vishay.com/docs/45233/krseries.pdf")
 		(tags "C Disc series Radial pin pitch 2.50mm  diameter 3.0mm width 1.6mm Capacitor")
 		(property "Reference" "C12"
-			(at 1.25 -1.5 180)
+			(at 1.25 1.5 180)
 			(layer "F.SilkS")
 			(uuid "21620a65-cbea-4e97-b306-33078e579e41")
 			(effects
@@ -8909,7 +8909,7 @@
 		(descr "C, Disc series, Radial, pin pitch=2.50mm, , diameter*width=3.0*1.6mm^2, Capacitor, http://www.vishay.com/docs/45233/krseries.pdf")
 		(tags "C Disc series Radial pin pitch 2.50mm  diameter 3.0mm width 1.6mm Capacitor")
 		(property "Reference" "C10"
-			(at 1.25 1.5 180)
+			(at 1.25 -1.5 180)
 			(layer "F.SilkS")
 			(uuid "6960c9f6-138a-4af8-bc05-43b6b20df8b9")
 			(effects
@@ -9747,7 +9747,7 @@
 		(descr "C, Disc series, Radial, pin pitch=2.50mm, , diameter*width=3.0*1.6mm^2, Capacitor, http://www.vishay.com/docs/45233/krseries.pdf")
 		(tags "C Disc series Radial pin pitch 2.50mm  diameter 3.0mm width 1.6mm Capacitor")
 		(property "Reference" "C6"
-			(at 1.25 1.75 90)
+			(at 1 1.75 90)
 			(layer "F.SilkS")
 			(uuid "7bfc8475-f8b0-454f-a96b-1d21f4b0506b")
 			(effects
@@ -12373,7 +12373,7 @@
 		(descr "C, Disc series, Radial, pin pitch=2.50mm, , diameter*width=3.0*1.6mm^2, Capacitor, http://www.vishay.com/docs/45233/krseries.pdf")
 		(tags "C Disc series Radial pin pitch 2.50mm  diameter 3.0mm width 1.6mm Capacitor")
 		(property "Reference" "C15"
-			(at 1.25 1.75 270)
+			(at 4 -0.25 0)
 			(layer "F.SilkS")
 			(uuid "31cb7b83-55d6-4fe8-b7cf-4a609658dd52")
 			(effects
@@ -18029,7 +18029,7 @@
 		)
 	)
 	(gr_text "GYROSCOPE"
-		(at 120 69 0)
+		(at 121.25 69 0)
 		(layer "F.SilkS")
 		(uuid "00000000-0000-0000-0000-00005a77fce9")
 		(effects
