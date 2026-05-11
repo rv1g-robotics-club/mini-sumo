@@ -1,13 +1,18 @@
 import lib.imu as imu
 import motor
 from machine import Timer
+import time
 
 
 class Motion:
-  def __init__(self):
+  def __init__(self, motorPins=[[14,13],[11,12]], turnPrecision=3, turnTimeoutMs=5000):
     self.imu = imu.IMU()
-    self.motor = motor.Motor()
+    self.motor = motor.Motor(motorPins)
     self.timer = Timer(0)
+
+    self.turnPrecision = turnPrecision
+    self.turnTimeoutMs = turnTimeoutMs
+
     self.cnt = 0
     self.imuData = None
     self.cmd = None
@@ -18,6 +23,9 @@ class Motion:
     self.integral = 0.0
     self.doneCnt = 0
     self.speed = 0
+    self.turnSpeed = 0
+    self.busy = False
+    self.tStart = 0
 
 
   def start(self):
@@ -29,8 +37,12 @@ class Motion:
     self.motor.stop()
 
 
-  def turn(self, angle):
-    self.cmd = ('turn', angle)
+  def turn(self, angle, speed=0xFFFF, blocking=False):
+    self.cmd = ('turn', angle, speed)
+    self.busy = True
+    if blocking:
+      while self.busy:
+        time.sleep_ms(10)
 
   def forward(self, speed=1000):
     self.cmd = ('forward', speed)
@@ -38,7 +50,8 @@ class Motion:
   def stop(self):
     self.cmd = ('stop', 0)
 
-
+  def getYaw(self):
+    return self.imu.yawUnwrapped
 
   def update(self, t):
     imuData = self.imu.read()
@@ -57,7 +70,9 @@ class Motion:
         self.startAngle = self.imuData[0]
         self.targetAngle = self.startAngle + self.lastCmd[1]
         self.speed = 0
+        self.turnSpeed = self.lastCmd[2]
         self.doneCnt = 0
+        self.tStart = time.ticks_ms()
       elif self.lastCmd[0] == 'forward':
         self.startAngle = self.imuData[0]
         self.targetAngle = self.startAngle
@@ -72,11 +87,12 @@ class Motion:
       if self.lastCmd[0] == 'turn' or self.lastCmd[0] == 'forward':
         # Do PID turn using cumulative (unwrapped) yaw
         error = self.targetAngle - self.imuData[0]
-        if abs(error) < 2 and self.lastCmd[0] == 'turn':
+        if (abs(error) < self.turnPrecision  or time.ticks_diff(time.ticks_ms(), self.tStart) > self.turnTimeoutMs) and self.lastCmd[0] == 'turn':
           self.doneCnt += 1
           if self.doneCnt > 5:
             self.motor.stop()
             self.lastCmd = None
+            self.busy = False
             # print("Turn completed")
         else:
           p = error
@@ -85,6 +101,9 @@ class Motion:
           i = self.integral
           self.prevError = error
 
-          turnSpeed = int(1000 * p + 10 * d + 0 * i)
+          turnSpeed = int(1000 * p + 10 * d + 20 * i)
+
+          # Limit to self.turnSpeed
+          turnSpeed = max(-self.turnSpeed, min(self.turnSpeed, turnSpeed))
 
           self.motor.drive(max(-65535, min(65535, self.speed + turnSpeed)), max(-65535, min(65535, self.speed - turnSpeed)))

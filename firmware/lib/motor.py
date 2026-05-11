@@ -3,13 +3,13 @@ from machine import Pin, PWM
 
 class Motor:
     
-  def __init__(self):
+  def __init__(self, motorPins=[[14,13],[11,12]]):
     print("This is robot")
     
-    self.motor = [[PWM(Pin(13),freq=1024,duty_u16=0xFFFF),
-                  PWM(Pin(14),freq=1024,duty_u16=0xFFFF)],
-                  [PWM(Pin(11),freq=1024,duty_u16=0xFFFF),
-                  PWM(Pin(12),freq=1024,duty_u16=0xFFFF)]]
+    self.motor = [[PWM(Pin(motorPins[0][0]),freq=1024,duty_u16=0xFFFF),
+                  PWM(Pin(motorPins[0][1]),freq=1024,duty_u16=0xFFFF)],
+                  [PWM(Pin(motorPins[1][0]),freq=1024,duty_u16=0xFFFF),
+                  PWM(Pin(motorPins[1][1]),freq=1024,duty_u16=0xFFFF)]]
 
   
   def deinit(self):
