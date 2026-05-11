@@ -44,11 +44,17 @@ class Motion:
       while self.busy:
         time.sleep_ms(10)
 
-  def forward(self, speed=1000):
+  def forward(self, speed=1000, durationMs=0):
     self.cmd = ('forward', speed)
+    if durationMs > 0:
+      time.sleep_ms(durationMs)
+      self.stop()
 
   def stop(self):
     self.cmd = ('stop', 0)
+
+  def isTurning(self):
+    return self.busy
 
   def getYaw(self):
     return self.imu.yawUnwrapped
